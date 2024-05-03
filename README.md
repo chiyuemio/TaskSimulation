@@ -1,1 +1,1 @@
-A task scheduling simulator under the job-continue policy
+A task scheduling simulator
