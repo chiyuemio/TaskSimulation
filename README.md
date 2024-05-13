@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # **A task scheduling simulator**
 
 We implement a simple scheduler based on weakly hard scheduling method to simulate the scheduling process of multiple tasks on a single processor. The weakly hard scheduling model serves as a method for characterizing systems that can withstand certain deadline misses, which introduces (m,k) constraint to describe a task.
@@ -29,3 +30,6 @@ gcc -o taskSimulator_jobContimue taskSimulator_jobContimue.c
 # check if the tasks meet the (1,3) constraint.
 cbmc --object-bits 16 --property main.assertion.1 --property main.assertion.2 --property main.assertion.3 jobContinue_5_13_testcase.c
 ```
+=======
+# TaskSimulation
+>>>>>>> ec48b29fac2fc1e00b5404615675a37efb4ab4a2

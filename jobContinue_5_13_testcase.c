@@ -39,7 +39,6 @@ int compare_tasks(const void* a, const void* b) {
     return taskA->period - taskB->period;
 }
 
-//miss the deadline 
 
 void initTasks(Task* tasks){
 /**
