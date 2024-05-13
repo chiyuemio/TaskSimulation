@@ -174,7 +174,6 @@ void simulate(Task* tasks) {
                 }
             }
         }else {
-            //printf("t%d\t idle\n", time);
             exTask = TASKS_NUM;
         }
         time++;
@@ -205,6 +204,7 @@ int main() {
     //assert(tasks[2].flag == 0);
     //assert(tasks[3].flag==0);
     //assert(tasks[4].flag==0);
+    assert(tasks[4].flag==0);
 
     free(tasks);
 
