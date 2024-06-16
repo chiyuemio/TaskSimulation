@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # **A task scheduling simulator**
 
 We implement a simple scheduler based on weakly hard scheduling method to simulate the scheduling process of multiple tasks on a single processor. The weakly hard scheduling model serves as a method for characterizing systems that can withstand certain deadline misses, which introduces (m,k) constraint to describe a task.
