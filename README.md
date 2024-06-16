@@ -6,29 +6,96 @@ We implement a simple scheduler based on weakly hard scheduling method to simula
 
 And we implemented the scheduler using the job-continue policy, which means the job will continue executing until its completion even if its deadline is missed.
 
-To learn more about the program and results, you can visit: https://docs.google.com/document/d/1kjAe8owy8EH7FAZSFXwevnIey23nS3FH7I5syTPAGAo/edit?usp=sharing
+## Project Overview
+
+The project consists of several components that work together to generate, preprocess, and validate task sets. The main parts of the project include task generation, preprocessing, initialization, and verification.
+
+```
+weakly-hard-realtime/
+|--task
+|   |--generator.py
+|   |--taskset_5_0.95
+|   |--taskset_5_0.90
+|   |--taskset_5_0.85
+|   |--taskset_5-0.80
+|--pre
+|   |--pre.py
+|   |--preProcess.c
+|   |--preProcess
+|--init
+|   |--init.py
+|--init.c
+|--simulate.c
+|--main.c
+|--simulate.h
+|--task.h
+|--start.py
+|--README.md
+```
+
+### task
+
+**generator.py**
+
++ This script generates an initial task set using the DRS  algorithm. The generated task information is saved into taskset.txt.
+
++ Input Parameters:
+
+    + `num_tasks`: number of tasks to generate.
+    + `utilization_sum`: the total CPU utilization of all tasks.
+    + `Tmin`: minimum task period.
+    + `Tmax`: maximum task period.
+
+**taskset**
+
++ These files contain predefined task sets with different utilization sums and task configurations.
+
+### pre/pre.py
+
++ This script preprocesses the initial tasks from taskset.txt to preliminarily check if the tasks are schedulable. It updates the schedulable field of each task based on the analysis results.
+
+### init/init.py
+
++ A script that reads task information from `taskset.txt` and writes it into the initialization section of task.h. It also allows setting various parameters such as `SIMULATION_TIME`, `TASKS_NUM`, `M`, `K`, and `NUMBER` for configuring the verification process.
+
+### simulate.c, main.c, simulate.h, task.h
+
++ These files define the simulation and verification logic, including task scheduling and constraint checking.
+
+### start.py
+
++ This script initiates the verification process to check whether the tasks satisfy the given constraints
+
 ## How to use it
 
-We implemented the scheduler in `taskSimulator_jobContimue.c`, which simulates the scheduling process with tasks generated randomly. We also compared results with online tool Simso, and we have not found bugs so far.
+### Generate initial task sets
+
++ Modify `num_task`, `sutilization_sum`, `Tmin`, `Tmax` in `generator.py` with the desired parameters and run it to create `taskset.txt`.
 
 ```bash
-# compile
-gcc -o taskSimulator_jobContimue taskSimulator_jobContimue.c
-
-# run
-./taskSimulator_jobContimue
+python task/generator.py #modify it according to the actual path.
 ```
 
-### Combining it with cbmc
-Our purpose is to detect whether a task meets the (m,k) constraint using CBMC, so we select a set containing 5 tasks and make their activation time generate randomly. The test example is in `jobContinue_5_13_testcase.c`.
+### Preprocess
+
++ Run `pre.py` to determine whether the tasks in `taskset.txt` are scheduleble and update the `schedulable` field of the tasks.
 
 ```bash
-# compile
-gcc -o taskSimulator_jobContimue taskSimulator_jobContimue.c
-
-# check if the tasks meet the (1,3) constraint.
-cbmc --object-bits 16 --property main.assertion.1 --property main.assertion.2 --property main.assertion.3 jobContinue_5_13_testcase.c
+python pre/pre.py
 ```
-=======
-# TaskSimulation
->>>>>>> ec48b29fac2fc1e00b5404615675a37efb4ab4a2
+
+### Initialize tasks
+
++ Modify `SIMULATION_TIME`, `TASKS_NUM`, `M`, `K`, `NUMBER` in `init.py` with the desired parameters, and run it to read task information from `taskset.txt` and write it into `task.h`.
+
+```bash
+python init/init.py
+```
+
+### Start running
+
++ Run `start.py` to start verification process.
+
+```bash
+python start.py
+```
