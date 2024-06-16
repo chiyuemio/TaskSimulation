@@ -11,7 +11,7 @@ And we implemented the scheduler using the job-continue policy, which means the 
 The project consists of several components that work together to generate, preprocess, and validate task sets. The main parts of the project include task generation, preprocessing, initialization, and verification.
 
 ```
-weakly-hard-realtime/
+TaskSimulation/
 |--task
 |   |--generator.py
 |   |--taskset_5_0.95
