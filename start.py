@@ -3,7 +3,7 @@ import re
 
 def run_cbmc_with_timing():
     
-    command = ['timeout', '1800', 'time', 'cbmc', '--object-bits', '16', '--property', 'main.assertion.1', 'main.c', 'init.c', 'simulate.c']
+    command = ['timeout', '1800', 'time', 'cbmc', '--object-bits', '16', '--property', 'main.assertion.1', 'main.c', 'init.c', 'simulate.c', 'scheduler.c', 'utils.c']
     
     try:
         # Run the command and capture the output

@@ -16,8 +16,8 @@ int main() {
     Scheduler* scheduler = &rms_scheduler; // &fifo_scheduler, &edf_scheduler, &rr_scheduler
 
     scheduler->init(scheduler, tasks);
-    simulate(NUMBER, scheduler);
 
+    simulate(NUMBER, scheduler);
     assert(tasks[NUMBER].flag==true);
 
     return 0;

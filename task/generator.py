@@ -1,6 +1,16 @@
 import drs
 import random
 from collections import namedtuple
+from pre import pre
+
+NUM_TASKS = 5
+UTILIZATION_SUM = 0.8
+TMIN = 5
+TMAX = 20
+
+M = 1
+K = 3
+NUMBER = 4
 
 # Define the Task structure
 Task = namedtuple('Task', ['id', 'wcet', 'period', 'deadline', 'schedulable', 'remaining', 'nextStart', 'activation', 'abDeadline', 'count', 'flag'])
@@ -12,7 +22,6 @@ def generate_tasks(num_tasks, utilization_sum, Tmin, Tmax):
     tasks = []
     for i, utilization in enumerate(utilizations):
         id = i + 1
-        #period = period_range[i % len(period_range)]  # Choose a period from the provided range
         period = random.randint(Tmin, Tmax) 
         wcet = max(1, int(utilization * period))  # Calculate WCET as utilization * period
         deadline = random.randint(wcet, period)  # For simplicity, set deadline equal to period
@@ -27,24 +36,26 @@ def generate_tasks(num_tasks, utilization_sum, Tmin, Tmax):
 
     return tasks
 
-# Parameters
-num_tasks = 5
-utilization_sum = 0.80
-Tmin = 5
-Tmax = 20
+def write_taskset(tasks, filename="taskset.txt"):
+    with open(filename, "w") as file:
+        file.write("{\n")
+        for task in tasks:
+            file.write("{"+",".join(map(str, task))+"},\n")
+        file.write("};\n")
 
-# Generate tasks
-tasks = generate_tasks(num_tasks, utilization_sum, Tmin, Tmax)
+def main():
 
-# Print the generated tasks
-for i, task in enumerate(tasks):
-    print(f"{task.id},{task.wcet},{task.period},{task.deadline}")
+    num_tasks = NUM_TASKS
+    utilization_sum =UTILIZATION_SUM
+    Tmin = TMIN
+    Tmax = TMAX
+    tasks = generate_tasks(num_tasks, utilization_sum, Tmin, Tmax)
+    for i, task in enumerate(tasks):
+        print(f"{task.id},{task.wcet},{task.period},{task.deadline}")
+    write_taskset(tasks)
 
-filename = "taskset.txt"
+    pre.main()
 
-with open(filename, "w") as file:
-    file.write("{\n")
-    for task in tasks:
-        file.write("{"+",".join(map(str, task))+"},\n")
-    file.write("};\n")
+if __name__ == "__main__":
 
+    main()
